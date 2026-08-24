@@ -6,6 +6,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/connectDB.js";
 import authRouter from "./routes/auth.routes.js";
+import userRouter from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 dotenv.config();
@@ -37,6 +38,8 @@ app.get("/health", (req, res) => {
 
 // Adding the Auth Routes
 app.use("/api/auth", authRouter);
+// Adding user Routes
+app.use("/api/user", userRouter);
 
 // Listening
 app.listen(PORT, () => {
