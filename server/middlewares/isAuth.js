@@ -16,7 +16,7 @@ export const isAuth = async (req, res, next) => {
     // Getting the token
     let { token } = req.cookies;
     if (!token) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Auth token not found.",
       });
@@ -24,7 +24,7 @@ export const isAuth = async (req, res, next) => {
     // Verify the token
     let verifyToken = await jwt.verify(token, process.env.JWT_SECRET);
     if (!verifyToken) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Invalid or expired token.",
       });
