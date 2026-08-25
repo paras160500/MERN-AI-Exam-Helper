@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { generateNotes } from "../services/api";
+import { useDispatch } from "react-redux";
+import { updateCredits } from "../redux/userSlice";
 
 export default function TopicForm({
   setResult,
@@ -16,6 +18,7 @@ export default function TopicForm({
   const [includeChart, setIncludeChart] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
@@ -42,6 +45,9 @@ export default function TopicForm({
       setIncludeChart(false);
       setIncludeDiagram(false);
       setRevisionMode(false);
+      if (typeof result.creditsLeft === "number") {
+        dispatch(updateCredits(result.creditsLeft));
+      }
     } catch (error) {
       setError("Failed to fetch nodes from server.");
       console.log(error);
