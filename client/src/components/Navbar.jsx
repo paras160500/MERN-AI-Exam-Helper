@@ -3,9 +3,10 @@ import logo from "../assets/vite.svg";
 import { useDispatch, useSelector } from "react-redux";
 import pluslogo from "../assets/plus-logo.svg";
 import { useState } from "react";
-import { ServerRouter, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { setUserData } from "../redux/userSlice";
+import { serverURL } from "../App";
 
 function Navbar() {
   const { userData } = useSelector((state) => state.user);
@@ -18,7 +19,7 @@ function Navbar() {
 
   const handleSignout = async () => {
     try {
-      await axios.get(ServerRouter + "/api/auth/logout", {
+      await axios.get(serverURL + "/api/auth/logout", {
         withCredentials: true,
       });
       dispatch(setUserData(null));
@@ -85,6 +86,7 @@ function Navbar() {
                 <button
                   onClick={() => {
                     setShowCredits(false);
+                    navigate("/pricing");
                   }}
                   className="w-full py-2 rounded-lg bg-linear-to-r from-blue-300 via-green-300 to-pink-400 text-black font-semibold shadow-[0_4px_20px_rgba(134,239,172,0.15)] transition-all hover:brightness-105 active:scale-[0.98]"
                 >
@@ -122,7 +124,10 @@ function Navbar() {
               >
                 <MenuItem
                   text="History"
-                  onClick={() => setshowProfile(false)}
+                  onClick={() => {
+                    setshowProfile(false);
+                    navigate("/history");
+                  }}
                 />
                 <div className="h-px bg-white/10 mx-3" />
                 <MenuItem text="Sign Out" red onClick={() => handleSignout()} />
@@ -139,7 +144,7 @@ function MenuItem({ onClick, text, red }) {
   return (
     <div
       onClick={onClick}
-      className={`w-full text-left px-5 py-3 text-sm transition-colors rounded-xl ${
+      className={`w-full text-left px-5 py-3 text-sm transition-colors cursor-pointer rounded-xl ${
         red
           ? "text-red-400 hover:bg-red-500/10"
           : "text-gray-200 hover:bg-white/10"

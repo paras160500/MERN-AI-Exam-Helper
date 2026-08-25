@@ -1,8 +1,11 @@
 import Navbar from "../components/Navbar";
 import { motion } from "motion/react";
 import img from "../assets/img_student.png";
+import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen overflow-hidden bg-white text-black">
       <Navbar />
@@ -41,7 +44,10 @@ function Home() {
               and revision-ready content using AI - Faster,cleaner and smarter
             </motion.p>
             <motion.button
-              whileHover={{ y: -3, rotateY: -8, scale: 1.07 }}
+              onClick={() => {
+                navigate("/notes");
+              }}
+              whileHover={{ scale: 1.07 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 200, damping: 18 }}
               className="
@@ -100,6 +106,7 @@ function Home() {
           des="Download clean, printable PDFs instantly."
         />
       </section>
+      <Footer />
     </div>
   );
 }
