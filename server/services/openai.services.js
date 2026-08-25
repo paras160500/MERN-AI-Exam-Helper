@@ -1,5 +1,5 @@
 // ================================================================================
-//                                Import & Init Statements
+//                             Import & Init Statements
 // ================================================================================
 
 import dotenv from "dotenv";
@@ -11,7 +11,7 @@ const openai = new OpenAI({
 });
 
 // ================================================================================
-//                               Model Inference Statements
+//                            Model Inference Statements
 // ================================================================================
 
 export const generateOpenAIResponse = async (prompt) => {

@@ -1,0 +1,34 @@
+// ================================================================================
+//                                   Model Statements
+// ================================================================================
+
+import mongoose from "mongoose";
+
+const notesSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    topic: {
+      type: String,
+      required: true,
+    },
+    classLevel: String,
+    examType: String,
+    revisionMode: {
+      type: Boolean,
+      default: false,
+    },
+    includeDiagram: Boolean,
+    includeChart: Boolean,
+    content: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
+
+export const Notes = mongoose.model("Notes", notesSchema);

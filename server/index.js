@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./utils/connectDB.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import notesRouter from "./routes/generate.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 dotenv.config();
@@ -40,6 +41,8 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRouter);
 // Adding user Routes
 app.use("/api/user", userRouter);
+// Adding notes routes
+app.use("/api/notes", notesRouter);
 
 // Listening
 app.listen(PORT, () => {
