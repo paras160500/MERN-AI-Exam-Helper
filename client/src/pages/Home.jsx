@@ -1,5 +1,11 @@
+import Navbar from "../components/Navbar";
+
 function Home() {
-  return <div>Home</div>;
+  return (
+    <div className="min-h-screen overflow-hidden bg-white text-black">
+      <Navbar />
+    </div>
+  );
 }
 
 export default Home;
