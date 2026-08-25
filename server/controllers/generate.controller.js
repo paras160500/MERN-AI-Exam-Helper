@@ -49,7 +49,7 @@ export const generateNotes = async (req, res) => {
       includeChart,
     });
     // Getting AI response
-    const aiResponse = generateOpenAIResponse(prompt);
+    const aiResponse = await generateOpenAIResponse(prompt);
     // update notes
     const notes = await Notes.create({
       user: user._id,

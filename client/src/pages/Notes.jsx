@@ -70,14 +70,14 @@ function Notes() {
       </motion.header>
 
       {/* Form */}
-      <motion.dev className="mg-12">
+      <motion.div className="mg-12">
         <TopicForm
           loading={loading}
           setResult={setResult}
           setLoading={setLoading}
           setError={setError}
         />
-      </motion.dev>
+      </motion.div>
 
       {!result && (
         <motion.div

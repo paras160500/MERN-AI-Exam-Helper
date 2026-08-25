@@ -47,9 +47,7 @@ function Home() {
               onClick={() => {
                 navigate("/notes");
               }}
-              whileHover={{ scale: 1.07 }}
               whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 200, damping: 18 }}
               className="
                 mt-10 px-10 py-3 rounded-xl
                 flex items-center gap-3

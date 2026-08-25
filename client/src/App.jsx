@@ -17,7 +17,6 @@ function App() {
   }, [dispatch]);
 
   const { userData } = useSelector((state) => state.user);
-  console.log(userData);
 
   return (
     <>
