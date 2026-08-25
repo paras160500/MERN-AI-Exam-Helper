@@ -43,12 +43,17 @@ function Home() {
               Generate exam-focused notes, project documentation, flow diagrams
               and revision-ready content using AI - Faster,cleaner and smarter
             </motion.p>
-            <motion.button
-              onClick={() => {
-                navigate("/notes");
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="
+          </motion.div>
+          <motion.button
+            onClick={() => {
+              navigate("/notes");
+            }}
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ y: -12, rotateX: 8, rotateY: -8, scale: 1.05 }}
+            className="
                 mt-10 px-10 py-3 rounded-xl
                 flex items-center gap-3
                 bg-linear-to-r from-[#050505] via-[#172554] to-[#4C1D95]
@@ -57,10 +62,9 @@ function Home() {
                 text-white font-semibold text-lg
                 shadow-[0_8px_30px_rgba(99,102,241,0.35)]
               "
-            >
-              Get Started
-            </motion.button>
-          </motion.div>
+          >
+            Get Started
+          </motion.button>
         </div>
         {/* Image DIV */}
         <motion.div

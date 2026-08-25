@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { generateNotes } from "../services/api";
 
 export default function TopicForm({
@@ -14,6 +14,8 @@ export default function TopicForm({
   const [revisionMode, setRevisionMode] = useState(false);
   const [includeDiagram, setIncludeDiagram] = useState(false);
   const [includeChart, setIncludeChart] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressText, setProgressText] = useState("");
 
   const handleSubmit = async () => {
     try {
@@ -34,12 +36,45 @@ export default function TopicForm({
       });
       setResult(result.data);
       setLoading(false);
+      setClassLevel("");
+      setTopic("");
+      setExamType("");
+      setIncludeChart(false);
+      setIncludeDiagram(false);
+      setRevisionMode(false);
     } catch (error) {
       setError("Failed to fetch nodes from server.");
       console.log(error);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading) {
+      setProgress(0);
+      setProgressText("");
+      return;
+    }
+    let value = 0;
+    const interval = setInterval(() => {
+      value += Math.random() * 8;
+      if (value >= 95) {
+        value = 95;
+        setProgressText("Almost done...");
+        clearInterval(interval);
+      } else if (value > 70) {
+        setProgressText("Finalizing notes...");
+      } else if (value > 40) {
+        setProgressText("Processing content...");
+      } else {
+        setProgressText("Generating notes...");
+      }
+      setProgress(Math.floor(value));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [loading]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -108,11 +143,33 @@ export default function TopicForm({
     ${
       loading
         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-        : "bg-linear-to-br from-pink-300 to-green-300 text-black shadow-[0_15px_35px_rgba(0,0,0,0.25)]"
+        : "bg-linear-to-br from-blue-600 to-pink-600 text-white shadow-[0_15px_35px_rgba(0,0,0,0.25)]"
     }`}
       >
         {loading ? "Generating Notes..." : "Generate Notes"}
       </motion.button>
+
+      {/* Progress bar */}
+      {loading && (
+        <div className="mt-4 space-y-2">
+          <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ ease: "easeOut", duration: 0.6 }}
+              className="h-full bg-linear-to-r from-green-400 via-emerald-400 to-green-500"
+            ></motion.div>
+          </div>
+          <div className="flex justify-between text-xs text-gray-300">
+            <span>{progressText}</span>
+            <span>{progress}%</span>
+          </div>
+          <p className="text-xs text-gray-400 text-center">
+            This may take up to 2-5 minutes. Please dont close or refresh the
+            page.
+          </p>
+        </div>
+      )}
     </motion.div>
   );
 }
