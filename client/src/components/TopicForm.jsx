@@ -76,7 +76,7 @@ export default function TopicForm({
         setProgressText("Generating notes...");
       }
       setProgress(Math.floor(value));
-    }, 1000);
+    }, 1100);
 
     return () => clearInterval(interval);
   }, [loading]);
