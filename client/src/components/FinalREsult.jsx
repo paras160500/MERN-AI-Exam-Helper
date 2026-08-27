@@ -1,5 +1,10 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import MermaidSetup from "./MermaidSetup";
+import RechartSetup from "./RechartSetup";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 
 const markDownComponent = {
   h1: ({ children }) => (
@@ -24,6 +29,35 @@ const markDownComponent = {
     <ul className="list-disc ml-6 space-y-1 text-gray-700">{children}</ul>
   ),
   li: ({ children }) => <li className="marker:text-indigo-500">{children}</li>,
+  strong: ({ children }) => (
+    <strong className="font-semibold text-gray-900">{children}</strong>
+  ),
+
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-4 border-indigo-400 pl-4 my-4 text-gray-600 italic">
+      {children}
+    </blockquote>
+  ),
+
+  hr: () => <hr className="my-6 border-gray-200" />,
+
+  table: ({ children }) => (
+    <div className="overflow-x-auto my-5">
+      <table className="min-w-full border border-gray-200 rounded-lg">
+        {children}
+      </table>
+    </div>
+  ),
+
+  th: ({ children }) => (
+    <th className="border border-gray-200 bg-indigo-50 px-4 py-2 text-left font-semibold">
+      {children}
+    </th>
+  ),
+
+  td: ({ children }) => (
+    <td className="border border-gray-200 px-4 py-2">{children}</td>
+  ),
 };
 
 function FinalREsult({ result }) {
@@ -83,7 +117,11 @@ function FinalREsult({ result }) {
         <section className="mt-10">
           <SectionHeader icon="📓" title="Detailed Notes" color="purple" />
           <div className="bg-white border border-gray-200 rounded-xl p-6">
-            <ReactMarkdown components={markDownComponent}>
+            <ReactMarkdown
+              components={markDownComponent}
+              remarkPlugins={[remarkMath]}
+              rehypePlugins={[rehypeKatex]}
+            >
               {result.notes}
             </ReactMarkdown>
           </div>
@@ -101,6 +139,34 @@ function FinalREsult({ result }) {
             ))}
           </ul>
         </section>
+      )}
+
+      {result.diagram?.data && (
+        <section className="mt-10">
+          <SectionHeader icon="📊" title="Diagram" color="cyan" />
+          <MermaidSetup diagram={result.diagram?.data} />
+          <p className="mt-3 text-xs text-gray-500 italic">
+            ℹ️ If you need this diagram for future reference or revision, you
+            can save it by taking screenshot.
+          </p>
+        </section>
+      )}
+
+      {result.charts?.length > 0 && (
+        <section className="mt-10">
+          <SectionHeader icon="📈" title="Visual Charts" color="indigo" />
+          <RechartSetup charts={result.charts} />
+          <p className="mt-3 text-xs text-gray-500 italic">
+            ℹ️ If you need this diagram for future reference or revision, you
+            can save it by taking screenshot.
+          </p>
+        </section>
+      )}
+
+      {result.charts && result.charts.length === 0 && (
+        <p className="text-sm text-gray-400 italic">
+          📉 Charts are not relevant to this topic.
+        </p>
       )}
 
       <section className="mt-10">
