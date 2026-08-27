@@ -19,7 +19,7 @@ export const getMyNotes = async (req, res) => {
 
 export const getSingleNote = async (req, res) => {
   try {
-    const note = await Notes.findOne({
+    const notes = await Notes.findOne({
       _id: req.params.id,
       user: req.userId,
     });
