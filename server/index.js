@@ -10,6 +10,7 @@ import userRouter from "./routes/user.routes.js";
 import notesRouter from "./routes/generate.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import pdfRouter from "./routes/pdf.routes.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -43,6 +44,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 // Adding notes routes
 app.use("/api/notes", notesRouter);
+// Adding pdf routes
+app.use("/api/pdf", pdfRouter);
 
 // Listening
 app.listen(PORT, () => {

@@ -5,6 +5,7 @@ import RechartSetup from "./RechartSetup";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
+import { downloadPDF } from "../services/api";
 
 const markDownComponent = {
   h1: ({ children }) => (
@@ -89,7 +90,10 @@ function FinalREsult({ result }) {
           >
             {quickRevision ? "Exit Revision Mode" : "Quick Revision (5 min)"}
           </button>
-          <button className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700">
+          <button
+            onClick={() => downloadPDF(result)}
+            className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700"
+          >
             ⬇️ Download PDF
           </button>
         </div>
