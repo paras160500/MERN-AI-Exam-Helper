@@ -16,8 +16,10 @@ function History() {
   const [selectedNote, setSelectedNote] = useState(null);
   const [loading, setLoading] = useState(false);
   const [topics, setTopics] = useState([]);
+  const [activeNodeID, setActiveNodeID] = useState(null);
   const openNotes = async (noteId) => {
     setLoading(true);
+    setActiveNodeID(noteId);
     try {
       const res = await axios.get(serverURL + `/api/notes/${noteId}`, {
         withCredentials: true,
@@ -145,7 +147,7 @@ function History() {
                         openNotes(t._id);
                       }}
                       key={i}
-                      className="cursor-pointer rounded-xl p-3 bg-white/5 border border-white/10 hover:bg-white/10"
+                      className={`cursor-pointer rounded-xl p-3 border transition-all ${activeNodeID === t._id ? "bg-indigo-500/30 border-indigo-400 shadow-[0_0_0_1px_rgba(99,102,241,0.6)]" : "bg-white/5 border-white/10 hover:bg-white/10"}`}
                     >
                       <p className="text-white text-sm font-semibold px-2">
                         {t.topic}
